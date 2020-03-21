@@ -1,0 +1,73 @@
+{
+    "openapi" : "3.0.0",
+    "servers" : [ {
+      "description" : "SwaggerHub API Auto Mocking",
+      "url" : "https://virtserver.swaggerhub.com/jonnydawg/kuberhealthy-checkclient/1.0.0"
+    } ],
+    "info" : {
+      "description" : "Kuberhealthy Check-Client",
+      "version" : "1.0.0",
+      "title" : "Kuberhealthy Check-Client",
+      "contact" : {
+        "email" : "jonathan_phan@comcast.com"
+      },
+      "license" : {
+        "name" : "Apache 2.0",
+        "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "tags" : [ {
+      "name" : "external-check-endpoint",
+      "description" : "Kuberhealthy external check client endpoint."
+    } ],
+    "paths" : {
+      "/externalCheckStatus" : {
+        "post" : {
+          "tags" : [ "external-check-endpoint" ],
+          "summary" : "Posts check run status to Kuberhealthy.",
+          "operationId" : "sendReport",
+          "description" : "Sends report to Kuberhealthy reporting URL\n",
+          "responses" : {
+            "200" : {
+              "description" : "reported status to kuberhealthy"
+            },
+            "400" : {
+              "description" : "failed to handle request body"
+            }
+          },
+          "requestBody" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/khstate"
+                }
+              }
+            },
+            "description" : "Updates khstate for a Kuberhealthy external check. __If any errors__ are supplied in the request body, then `OK` must be set to `false`. Kuberhealthy will return a `400` __if any errors__ are supplied and `OK` is set to `true`.\n"
+          }
+        }
+      }
+    },
+    "components" : {
+      "schemas" : {
+        "khstate" : {
+          "description" : "Kuberhealthy external check state.",
+          "type" : "object",
+          "required" : [ "Errors", "OK" ],
+          "properties" : {
+            "Errors" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              },
+              "example" : [ "check execution error", "check took too long and timed out" ]
+            },
+            "OK" : {
+              "type" : "boolean",
+              "example" : false
+            }
+          }
+        }
+      }
+    }
+  }

@@ -1,27 +1,23 @@
 openapi: 3.0.0
-# Added by API Auto Mocking Plugin
-servers:
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/jonnydawg/kuberhealthy-checkclient/1.0.0
 info:
-  description: Kuberhealthy Check-Client
+  description: "Kuberhealthy check client"
   version: "1.0.0"
-  title: Kuberhealthy Check-Client
+  title: "Kuberhealthy check client"
   contact:
-    email: jonathan_phan@comcast.com
+    email: "jonathan_phan@comcast.com"
   license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 tags:
-  - name: external-check-endpoint
+  - name: "external-check-endpoint"
     description: "Kuberhealthy external check client endpoint."
 paths:
   /externalCheckStatus:
     post:
       tags:
-        - external-check-endpoint
+        - "external-check-endpoint"
       summary: "Posts check run status to Kuberhealthy."
-      operationId: sendReport
+      operationId: "sendReport"
       description: |
         Sends report to Kuberhealthy reporting URL
       responses:
@@ -30,20 +26,21 @@ paths:
         '400':
           description: "failed to handle request body"
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/khstate'
         description: |
-          Updates khstate for a Kuberhealthy external check. __If any errors__ are supplied in the request body, then `OK` must be set to `false`. Kuberhealthy will return a `400` __if any errors__ are supplied and `OK` is set to `true`.
+          Updates khstate for a Kuberhealthy external check. If any errors are supplied in the request body, then `OK` must be set to `false`. Kuberhealthy will return a `400` if any errors are supplied and `OK` is set to `true`.
 components:
     schemas:
       khstate:
         description: "Kuberhealthy external check state."
         type: object
         required:
-          - Errors
-          - OK
+          - "Errors"
+          - "OK"
         properties:
           Errors:
             type: array

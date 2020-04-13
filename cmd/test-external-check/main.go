@@ -21,18 +21,26 @@ func init() {
 	var err error
 
 	// parse REPORT_FAILURE environment var
-	reportFailureStr := os.Getenv("REPORT_FAILURE")
-	reportFailure, err = strconv.ParseBool(reportFailureStr)
+	reportFailure, err = strconv.ParseBool(getEnv("REPORT_FAILURE", "false"))
 	if err != nil {
 		log.Fatalln("Failed to parse REPORT_FAILURE env var:", err)
 	}
 
 	// parse REPORT_DELAY environment var
-	reportDelayStr := os.Getenv("REPORT_DELAY")
+	reportDelayStr := getEnv("REPORT_DELAY", "10s")
 	reportDelay, err = time.ParseDuration(reportDelayStr)
 	if err != nil {
 		log.Fatalln("Failed to parse REPORT_DELAY env var:", err)
 	}
+}
+
+// getEnv returns a default value if there is no environment variable set
+func getEnv(key, fallback string) string {
+	value := os.Getenv(key)
+	if len(value) == 0 {
+		return fallback
+	}
+	return value
 }
 
 func main() {

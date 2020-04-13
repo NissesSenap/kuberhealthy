@@ -14,7 +14,11 @@ spec:
       - env:
           - name: "SOME_ENV_VAR"
             value: "12345"
-        image: integrii/kh-test-check
+          - name: "REPORT_FAILURE"
+            value: "false"
+          - name: "REPORT_DELAY"
+            value: "10s"
+        image: kuberhealthy/test-external-check:v1.2.0
         imagePullPolicy: IfNotPresent
         name: main
         resources:

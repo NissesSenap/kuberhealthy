@@ -27,8 +27,5 @@ jobs:
         echo "current-context:" $(kubectl config current-context)
         echo "environment-kubeconfig:" ${KUBECONFIG}
 
-    - name: "Install HELM 3"
-      run: |
-        sudo curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
     - name: "running end to end test"
       run: ./.ci/e2e.sh

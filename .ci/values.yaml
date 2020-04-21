@@ -18,6 +18,9 @@ resources:
   requests:
     cpu: 400m
     memory: 300Mi
+  limits:
+    cpu: 800m
+    memory: 600Mi
 
 tolerations:
   # change to true to tolerate and deploy to masters
@@ -55,6 +58,8 @@ service:
 check:
   daemonset:
     enabled: true
+    runInterval: 20m
+    timeout: 12m
     image:
       repository: kuberhealthy/daemonset-check
       tag: v2.2.1
@@ -62,6 +67,8 @@ check:
     nodeSelector: {}
   deployment:
     enabled: true
+    runInterval: 20m
+    timeout: 15m
     image:
       repository: kuberhealthy/deployment-check
       tag: v1.3.4
@@ -71,6 +78,8 @@ check:
     nodeSelector: {}
   dnsInternal:
     enabled: true
+    runInterval: 20m
+    timeout: 15m
     image:
       repository: kuberhealthy/dns-resolution-check
       tag: v1.2.0
@@ -78,7 +87,9 @@ check:
       HOSTNAME: "kubernetes.default"
     nodeSelector: {}
   podRestarts:
-    enabled: false
+    enabled: true
+    runInterval: 20m
+    timeout: 10m
     image:
       repository: kuberhealthy/pod-restarts-check
       tag: v2.2.1
@@ -86,7 +97,9 @@ check:
       MAX_FAILURES_ALLOWED: "10"
     nodeSelector: {}
   podStatus:
-    enabled: false
+    enabled: true
+    runInterval: 20m
+    timeout: 15m
     image:
       repository: kuberhealthy/pod-status-check
       tag: v1.2.2
@@ -94,6 +107,7 @@ check:
     nodeSelector: {}
 
 checkReaper:
+  enabled: false
   image:
     repository: kuberhealthy/check-reaper
     tag: v1.3.1
